@@ -560,6 +560,7 @@ h4 {
 .hero-grid {
   grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
   align-items: start;
+  gap: 1.55rem;
 }
 
 .hero-copy,
@@ -611,6 +612,14 @@ h4 {
 
 .hero-label {
   margin: 0 0 1.2rem;
+}
+
+.hero-title {
+  max-width: 16.6ch;
+  font-size: clamp(3rem, 6.0vw, 4.95rem);
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
 }
 
 h1 {
@@ -857,6 +866,8 @@ h4 {
 }
 
 .hero-panel {
+  width: min(100%, 34rem);
+  justify-self: end;
   overflow: hidden;
   padding: 1.2rem;
   border-radius: calc(var(--radius-xl) + 0.2rem);
@@ -1809,6 +1820,10 @@ h4 {
 
   .cv-section {
     padding-top: 0.8rem;
+  }
+
+  .hero-title {
+    max-width: 12.2ch;
   }
 
   .cv-card {
