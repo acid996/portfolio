@@ -241,47 +241,45 @@ main section[id] {
 }
 
 .brand {
+  position: relative;
   display: inline-flex;
   align-items: end;
   gap: 0.75rem;
 }
 
 .brand-mark {
-  display: grid;
-  place-items: end center;
-  width: 3.2rem;
-  height: 4rem;
+  position: relative;
+  display: block;
+  width: 4.1rem;
+  max-width: 100%;
+  min-width: 4.1rem;
+  height: calc(var(--header-height) - 1px);
+  aspect-ratio: 303 / 320;
   font-family: "Sora", sans-serif;
   font-size: 0.88rem;
   letter-spacing: 0.12em;
   overflow: hidden;
   flex: 0 0 auto;
+  flex-shrink: 0;
   margin-bottom: -1px;
-  border-radius: 0.95rem 0.95rem 0.75rem 0.75rem;
-}
-
-.brand-photo {
-  position: relative;
-  align-items: end;
+  border-radius: 1rem 1rem 0.8rem 0.8rem;
   background: transparent;
+  border: 0;
 }
 
-.brand-photo img {
-  position: relative;
-  z-index: 1;
+.image-wrapper img {
   display: block;
   width: 100%;
   height: 100%;
   max-width: none;
-  object-fit: contain;
-  object-position: center bottom;
-  transform: translateY(0);
+  object-fit: cover;
+  object-position: center 18%;
   filter:
     drop-shadow(0 10px 16px rgba(0, 0, 0, 0.16))
     saturate(1.02);
 }
 
-[data-theme="light"] .brand-photo img {
+[data-theme="light"] .image-wrapper img {
   filter:
     drop-shadow(0 8px 14px rgba(47, 67, 88, 0.12))
     saturate(1.01);
@@ -1288,8 +1286,9 @@ h4 {
   }
 
   .brand-mark {
-    width: 2.7rem;
-    height: 3.35rem;
+    width: 4.35rem;
+    min-width: 4.35rem;
+    height: calc(var(--header-height) + 0.35rem);
   }
 
   .nav-panel {
