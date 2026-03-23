@@ -564,6 +564,7 @@ h4 {
 
 .hero-copy,
 .hero-panel,
+.cv-card,
 .about-card,
 .skill-card,
 .work-card,
@@ -879,6 +880,7 @@ h4 {
 }
 
 .terminal-card,
+.cv-card,
 .about-card,
 .skill-card,
 .work-card,
@@ -901,6 +903,7 @@ h4 {
 }
 
 .terminal-card::before,
+.cv-card::before,
 .about-card::before,
 .skill-card::before,
 .work-card::before,
@@ -924,6 +927,7 @@ h4 {
 }
 
 .terminal-card,
+.cv-card,
 .about-card,
 .skill-card,
 .work-card,
@@ -967,6 +971,67 @@ h4 {
   gap: 1rem;
   margin-top: 1rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cv-section {
+  padding-top: 1.2rem;
+}
+
+.cv-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.8rem;
+  align-items: center;
+  padding: 1.55rem 1.65rem;
+}
+
+.cv-copy {
+  max-width: 40rem;
+}
+
+.cv-copy h2 {
+  margin: 0.24rem 0 0.72rem;
+  font-size: clamp(1.55rem, 2.2vw, 2rem);
+}
+
+.cv-copy p:not(.cv-format) {
+  margin: 0;
+  color: var(--muted);
+  max-width: 36rem;
+}
+
+.cv-format {
+  margin: 0.95rem 0 0;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.cv-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cv-button {
+  min-width: 12.2rem;
+  justify-content: center;
+  gap: 0.68rem;
+}
+
+.cv-button-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.12rem;
+  height: 1.12rem;
+}
+
+.cv-button-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .signal-card {
@@ -1017,6 +1082,8 @@ h4 {
 
 .signal-card:hover,
 .signal-card:focus-within,
+.cv-card:hover,
+.cv-card:focus-within,
 .skill-card:hover,
 .skill-card:focus-within,
 .about-card:hover,
@@ -1040,6 +1107,8 @@ h4 {
 
 .signal-card:hover::before,
 .signal-card:focus-within::before,
+.cv-card:hover::before,
+.cv-card:focus-within::before,
 .skill-card:hover::before,
 .skill-card:focus-within::before,
 .about-card:hover::before,
@@ -1687,6 +1756,15 @@ h4 {
     right: auto;
     top: 0.16rem;
   }
+
+  .cv-card {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .cv-actions {
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 780px) {
@@ -1727,6 +1805,25 @@ h4 {
 
   .brand-copy span {
     font-size: 0.74rem;
+  }
+
+  .cv-section {
+    padding-top: 0.8rem;
+  }
+
+  .cv-card {
+    gap: 1.2rem;
+    padding: 1.3rem;
+  }
+
+  .cv-copy h2 {
+    margin-bottom: 0.62rem;
+    font-size: 1.42rem;
+  }
+
+  .cv-button {
+    width: 100%;
+    min-width: 0;
   }
 
   .nav-panel {

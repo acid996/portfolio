@@ -469,9 +469,23 @@ function setupNavigation() {
       return;
     }
 
-    section.scrollIntoView({
-      behavior: reducedMotion.matches ? "auto" : "smooth",
-      block: "start"
+    const anchor = section.querySelector("[data-scroll-anchor]") || section;
+    const rootStyles = getComputedStyle(root);
+    const headerHeight =
+      (siteHeader ? siteHeader.offsetHeight : 20) ||
+      Number.parseFloat(rootStyles.getPropertyValue("--header-height")) ||
+      0;
+    const scrollOffset = 20;
+    const anchorTop = anchor.getBoundingClientRect().top + window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const targetTop = Math.min(
+      Math.max(anchorTop - headerHeight - scrollOffset, 0),
+      Math.max(maxScroll, 0)
+    );
+
+    window.scrollTo({
+      top: targetTop,
+      behavior: reducedMotion.matches ? "auto" : "smooth"
     });
   };
 
