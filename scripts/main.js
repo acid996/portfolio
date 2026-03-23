@@ -282,9 +282,14 @@ function renderContactCards() {
             ${withRevealStyle(index * 70)}
             aria-label="Copy email address ${card.value}"
           >
-            <span class="card-label">${card.title}</span>
-            <strong class="contact-card-value">${card.value}</strong>
-            <span>${card.subtext}</span>
+            <div class="contact-card-content">
+              <span class="contact-card-label">${card.title}</span>
+              <strong class="contact-card-value">${card.value}</strong>
+              <span class="contact-card-description">${card.subtext}</span>
+            </div>
+            <span class="contact-card-icon" aria-hidden="true">
+              ${socialIcons[card.title] || socialIcons.Email}
+            </span>
             <p class="contact-card-feedback" aria-live="polite"></p>
           </button>
         `;
@@ -298,9 +303,14 @@ function renderContactCards() {
           data-reveal
           ${withRevealStyle(index * 70)}
         >
-          <span class="card-label">${card.title}</span>
-          <strong class="contact-card-value">${card.value}</strong>
-          <span>${card.subtext}</span>
+          <div class="contact-card-content">
+            <span class="contact-card-label">${card.title}</span>
+            <strong class="contact-card-value">${card.value}</strong>
+            <span class="contact-card-description">${card.subtext}</span>
+          </div>
+          <span class="contact-card-icon" aria-hidden="true">
+            ${socialIcons[card.title] || socialIcons.Email}
+          </span>
         </a>
       `;
     })

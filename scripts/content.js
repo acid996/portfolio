@@ -298,7 +298,7 @@ export const siteContent = {
   contactCards: [
     {
       title: "Email",
-      value: "shterjoski.stefan@gmail.com",
+      value: "shterjoski.stefan@<wbr>gmail.com",
       subtext: "Direct contact",
       href: "mailto:shterjoski.stefan@gmail.com?subject=Portfolio%20Inquiry%20for%20Stefan%20Shterjoski",
       mode: "email",
