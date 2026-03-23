@@ -268,8 +268,9 @@ export const siteContent = {
     {
       title: "Email",
       value: "shterjoski.stefan@gmail.com",
-      subtext: "Email Me",
-      href: "mailto:shterjoski.stefan@gmail.com",
+      subtext: "Direct contact",
+      href: "mailto:shterjoski.stefan@gmail.com?subject=Portfolio%20Inquiry%20for%20Stefan%20Shterjoski",
+      mode: "email",
       primary: true
     },
     {

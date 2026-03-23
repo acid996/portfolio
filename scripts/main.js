@@ -2,7 +2,6 @@ import { siteContent } from "./content.js";
 
 const root = document.documentElement;
 const themeToggle = document.getElementById("theme-toggle");
-const themeToggleText = document.querySelector(".theme-toggle-text");
 const themeMeta = document.querySelector('meta[name="theme-color"]');
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector(".nav-links");
@@ -10,6 +9,7 @@ const navAnchors = [...document.querySelectorAll(".nav-links a")];
 const form = document.getElementById("contact-form");
 const formStatus = document.getElementById("form-status");
 const startedAt = document.getElementById("started-at");
+const cursorTooltip = document.getElementById("cursor-tooltip");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function renderLinkAttributes(url) {
@@ -176,8 +176,25 @@ function renderContactCards() {
   }
 
   container.innerHTML = siteContent.contactCards
-    .map(
-      (card) => `
+    .map((card) => {
+      if (card.mode === "email") {
+        return `
+          <button
+            class="contact-card primary is-email-card"
+            type="button"
+            data-copy-email="${card.value}"
+            data-reveal
+            aria-label="Copy email address ${card.value}"
+          >
+            <span class="card-label">${card.title}</span>
+            <strong class="contact-card-value">${card.value}</strong>
+            <span>${card.subtext}</span>
+            <p class="contact-card-feedback" aria-live="polite"></p>
+          </button>
+        `;
+      }
+
+      return `
         <a
           class="contact-card${card.primary ? " primary" : ""}"
           href="${card.href}"
@@ -185,12 +202,122 @@ function renderContactCards() {
           data-reveal
         >
           <span class="card-label">${card.title}</span>
-          <strong>${card.value}</strong>
+          <strong class="contact-card-value">${card.value}</strong>
           <span>${card.subtext}</span>
         </a>
-      `
-    )
+      `;
+    })
     .join("");
+}
+
+async function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const helper = document.createElement("textarea");
+  helper.value = text;
+  helper.setAttribute("readonly", "");
+  helper.style.position = "absolute";
+  helper.style.left = "-9999px";
+  document.body.appendChild(helper);
+  helper.select();
+  document.execCommand("copy");
+  document.body.removeChild(helper);
+}
+
+function setupContactCardActions() {
+  const copyButtons = document.querySelectorAll("[data-copy-email]");
+
+  copyButtons.forEach((button) => {
+    let resetTimer;
+    let pointerX = 0;
+    let pointerY = 0;
+
+    const updateTooltipPosition = (x, y) => {
+      if (!cursorTooltip) {
+        return;
+      }
+
+      cursorTooltip.style.setProperty("--tooltip-x", `${x}px`);
+      cursorTooltip.style.setProperty("--tooltip-y", `${y}px`);
+    };
+
+    const showTooltip = (label) => {
+      if (!cursorTooltip) {
+        return;
+      }
+
+      cursorTooltip.textContent = label;
+      cursorTooltip.classList.add("is-visible");
+    };
+
+    const hideTooltip = () => {
+      if (!cursorTooltip) {
+        return;
+      }
+
+      cursorTooltip.classList.remove("is-visible");
+    };
+
+    button.addEventListener("pointerenter", (event) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      updateTooltipPosition(pointerX, pointerY);
+      showTooltip(button.classList.contains("is-copied") ? "Copied" : "Copy email");
+    });
+
+    button.addEventListener("pointermove", (event) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      updateTooltipPosition(pointerX, pointerY);
+    });
+
+    button.addEventListener("pointerleave", () => {
+      hideTooltip();
+    });
+
+    button.addEventListener("focus", () => {
+      const rect = button.getBoundingClientRect();
+      updateTooltipPosition(rect.left + rect.width / 2, rect.top);
+      showTooltip(button.classList.contains("is-copied") ? "Copied" : "Copy email");
+    });
+
+    button.addEventListener("blur", () => {
+      hideTooltip();
+    });
+
+    button.addEventListener("click", async () => {
+      const email = button.getAttribute("data-copy-email");
+      const card = button.closest(".is-email-card");
+      const feedback = card ? card.querySelector(".contact-card-feedback") : null;
+
+      if (!email || !feedback || !card) {
+        return;
+      }
+
+      try {
+        await copyText(email);
+        window.clearTimeout(resetTimer);
+        card.classList.add("is-copied");
+        feedback.textContent = "Email copied to clipboard.";
+        showTooltip("Copied");
+        resetTimer = window.setTimeout(() => {
+          card.classList.remove("is-copied");
+          feedback.textContent = "";
+          if (document.activeElement === button) {
+            showTooltip("Copy email");
+          } else {
+            hideTooltip();
+          }
+        }, 2200);
+      } catch (error) {
+        feedback.textContent = "Could not copy automatically.";
+        showTooltip("Copy failed");
+      }
+    });
+  });
 }
 
 function applyTheme(theme) {
@@ -207,10 +334,6 @@ function applyTheme(theme) {
       "aria-label",
       theme === "light" ? "Switch to dark mode" : "Switch to light mode"
     );
-  }
-
-  if (themeToggleText) {
-    themeToggleText.textContent = theme === "light" ? "Light mode" : "Dark mode";
   }
 
   if (themeMeta) {
@@ -512,6 +635,7 @@ function init() {
   renderWork();
   renderJourney();
   renderContactCards();
+  setupContactCardActions();
   setupThemeToggle();
   setupNavigation();
   setupRevealAnimations();
