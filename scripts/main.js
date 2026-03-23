@@ -6,7 +6,8 @@ const themeMeta = document.querySelector('meta[name="theme-color"]');
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector(".nav-links");
 const navScrim = document.getElementById("nav-scrim");
-const navAnchors = [...document.querySelectorAll(".nav-links a")];
+const navAnchors = [...document.querySelectorAll(".nav-links [data-scroll-target]")];
+const scrollTriggers = [...document.querySelectorAll("[data-scroll-target]")];
 const form = document.getElementById("contact-form");
 const formStatus = document.getElementById("form-status");
 const startedAt = document.getElementById("started-at");
@@ -452,6 +453,18 @@ function setupThemeToggle() {
 }
 
 function setupNavigation() {
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (!section) {
+      return;
+    }
+
+    section.scrollIntoView({
+      behavior: reducedMotion.matches ? "auto" : "smooth",
+      block: "start"
+    });
+  };
+
   if (navToggle && navLinks) {
     const setNavOpen = (isOpen) => {
       navLinks.classList.toggle("is-open", isOpen);
@@ -466,12 +479,6 @@ function setupNavigation() {
     navToggle.addEventListener("click", () => {
       const isOpen = !navLinks.classList.contains("is-open");
       setNavOpen(isOpen);
-    });
-
-    navAnchors.forEach((anchor) => {
-      anchor.addEventListener("click", () => {
-        setNavOpen(false);
-      });
     });
 
     if (navScrim) {
@@ -502,6 +509,22 @@ function setupNavigation() {
         setNavOpen(false);
       }
     });
+
+    scrollTriggers.forEach((trigger) => {
+      trigger.addEventListener("click", (event) => {
+        const sectionId = trigger.getAttribute("data-scroll-target");
+        if (!sectionId) {
+          return;
+        }
+
+        event.preventDefault();
+        scrollToSection(sectionId);
+
+        if (navLinks.contains(trigger)) {
+          setNavOpen(false);
+        }
+      });
+    });
   }
 
   const sections = [...document.querySelectorAll("main section[id]")];
@@ -515,7 +538,7 @@ function setupNavigation() {
         navAnchors.forEach((anchor) => {
           anchor.classList.toggle(
             "is-active",
-            anchor.getAttribute("href") === `#${entry.target.id}`
+            anchor.getAttribute("data-scroll-target") === entry.target.id
           );
         });
       });
