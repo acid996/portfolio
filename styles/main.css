@@ -290,6 +290,10 @@ h4 {
   gap: 0.9rem;
 }
 
+.nav-panel {
+  position: relative;
+}
+
 .nav-links {
   display: flex;
   align-items: center;
@@ -418,14 +422,51 @@ h4 {
   display: none;
   width: 3rem;
   padding: 0;
+  flex-direction: column;
+  gap: 0.22rem;
+  overflow: hidden;
 }
 
 .nav-toggle span {
   display: block;
   width: 1.1rem;
   height: 2px;
-  margin: 0.2rem auto;
+  margin: 0 auto;
+  border-radius: 999px;
   background: var(--text);
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 180ms ease,
+    width 220ms ease;
+}
+
+.nav-toggle.is-active span:nth-child(1) {
+  transform: translateY(0.44rem) rotate(45deg);
+}
+
+.nav-toggle.is-active span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0.5);
+}
+
+.nav-toggle.is-active span:nth-child(3) {
+  transform: translateY(-0.44rem) rotate(-45deg);
+}
+
+.nav-scrim {
+  position: fixed;
+  inset: var(--header-height) 0 0;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--bg) 34%, transparent), color-mix(in srgb, var(--bg) 72%, transparent));
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.nav-scrim.is-visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .hero {
@@ -1161,12 +1202,16 @@ h4 {
   }
 
   .nav {
-    align-items: flex-start;
+    align-items: center;
     padding: 0.95rem 0;
   }
 
   .nav-panel {
     margin-left: auto;
+  }
+
+  .nav-actions {
+    gap: 0.65rem;
   }
 
   .nav-toggle {
@@ -1177,19 +1222,54 @@ h4 {
     position: absolute;
     top: calc(100% + 0.65rem);
     right: 0;
-    width: min(18rem, calc(100vw - 1.2rem));
+    width: min(19.5rem, calc(100vw - 1.2rem));
     padding: 0.85rem;
-    border-radius: 1.2rem;
+    border-radius: 1.35rem;
     border: 1px solid var(--border);
     background: color-mix(in srgb, var(--bg-elevated) 96%, transparent);
     box-shadow: var(--shadow);
-    display: none;
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.25rem;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-0.55rem) scale(0.98);
+    transform-origin: top right;
+    transition:
+      opacity 220ms ease,
+      transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0ms linear 220ms;
   }
 
   .nav-links.is-open {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    transition:
+      opacity 220ms ease,
+      transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0ms linear 0ms;
+  }
+
+  .nav-links a {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: 1rem;
+    background: transparent;
+    font-size: 0.98rem;
+  }
+
+  .nav-links a::after {
+    display: none;
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible,
+  .nav-links a.is-active {
+    background: color-mix(in srgb, var(--surface) 88%, transparent);
+    color: var(--text);
   }
 
   .hero {
@@ -1214,6 +1294,10 @@ h4 {
 
   .section {
     padding: 4rem 0;
+  }
+
+  body.nav-open {
+    overflow: hidden;
   }
 }
 

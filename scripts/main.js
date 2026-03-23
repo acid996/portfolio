@@ -5,6 +5,7 @@ const themeToggle = document.getElementById("theme-toggle");
 const themeMeta = document.querySelector('meta[name="theme-color"]');
 const navToggle = document.querySelector(".nav-toggle");
 const navLinks = document.querySelector(".nav-links");
+const navScrim = document.getElementById("nav-scrim");
 const navAnchors = [...document.querySelectorAll(".nav-links a")];
 const form = document.getElementById("contact-form");
 const formStatus = document.getElementById("form-status");
@@ -357,17 +358,32 @@ function setupThemeToggle() {
 
 function setupNavigation() {
   if (navToggle && navLinks) {
-    navToggle.addEventListener("click", () => {
-      const isOpen = navLinks.classList.toggle("is-open");
+    const setNavOpen = (isOpen) => {
+      navLinks.classList.toggle("is-open", isOpen);
+      navToggle.classList.toggle("is-active", isOpen);
       navToggle.setAttribute("aria-expanded", String(isOpen));
+      document.body.classList.toggle("nav-open", isOpen);
+      if (navScrim) {
+        navScrim.classList.toggle("is-visible", isOpen);
+      }
+    };
+
+    navToggle.addEventListener("click", () => {
+      const isOpen = !navLinks.classList.contains("is-open");
+      setNavOpen(isOpen);
     });
 
     navAnchors.forEach((anchor) => {
       anchor.addEventListener("click", () => {
-        navLinks.classList.remove("is-open");
-        navToggle.setAttribute("aria-expanded", "false");
+        setNavOpen(false);
       });
     });
+
+    if (navScrim) {
+      navScrim.addEventListener("click", () => {
+        setNavOpen(false);
+      });
+    }
 
     document.addEventListener("click", (event) => {
       const target = event.target;
@@ -376,8 +392,19 @@ function setupNavigation() {
       }
 
       if (!navLinks.contains(target) && !navToggle.contains(target)) {
-        navLinks.classList.remove("is-open");
-        navToggle.setAttribute("aria-expanded", "false");
+        setNavOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setNavOpen(false);
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 780) {
+        setNavOpen(false);
       }
     });
   }
