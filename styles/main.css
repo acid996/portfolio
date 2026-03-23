@@ -249,13 +249,15 @@ main section[id] {
 .brand-mark {
   display: grid;
   place-items: end center;
-  width: 3.55rem;
-  height: 4.35rem;
+  width: 3.2rem;
+  height: 4rem;
   font-family: "Sora", sans-serif;
   font-size: 0.88rem;
   letter-spacing: 0.12em;
   overflow: hidden;
   flex: 0 0 auto;
+  margin-bottom: -1px;
+  border-radius: 0.95rem 0.95rem 0.75rem 0.75rem;
 }
 
 .brand-photo {
@@ -267,12 +269,13 @@ main section[id] {
 .brand-photo img {
   position: relative;
   z-index: 1;
-  width: 112%;
-  height: auto;
+  display: block;
+  width: 100%;
+  height: 100%;
   max-width: none;
-  object-fit: cover;
-  object-position: center top;
-  transform: translateY(0.14rem);
+  object-fit: contain;
+  object-position: center bottom;
+  transform: translateY(0);
   filter:
     drop-shadow(0 10px 16px rgba(0, 0, 0, 0.16))
     saturate(1.02);
@@ -287,7 +290,7 @@ main section[id] {
 .brand-copy {
   display: grid;
   gap: 0.18rem;
-  padding-bottom: 0.48rem;
+  padding-bottom: 0.4rem;
 }
 
 .brand-copy strong,
@@ -943,6 +946,50 @@ h4 {
   box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 62%, transparent);
 }
 
+.timeline-copy {
+  margin: 0;
+}
+
+.timeline-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.35rem;
+}
+
+.timeline-detail {
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--section-line);
+}
+
+.timeline-detail-label {
+  margin: 0;
+  font-size: 0.76rem;
+  font-family: "Sora", sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.timeline-list {
+  margin: 0.65rem 0 0;
+  padding-left: 1rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.68;
+}
+
+.timeline-list li + li {
+  margin-top: 0.35rem;
+}
+
+.journey-note {
+  margin: 1rem 0 0;
+  color: var(--soft);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
 .contact-grid {
   grid-template-columns: minmax(0, 0.92fr) minmax(340px, 1.08fr);
   align-items: start;
@@ -1211,6 +1258,10 @@ h4 {
     padding-left: 1.6rem;
   }
 
+  .timeline-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .timeline-time {
     padding-top: 0;
   }
@@ -1237,8 +1288,8 @@ h4 {
   }
 
   .brand-mark {
-    width: 2.95rem;
-    height: 3.55rem;
+    width: 2.7rem;
+    height: 3.35rem;
   }
 
   .nav-panel {
@@ -1315,6 +1366,10 @@ h4 {
   .contact-cards,
   .form-grid,
   .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timeline-detail-grid {
     grid-template-columns: 1fr;
   }
 

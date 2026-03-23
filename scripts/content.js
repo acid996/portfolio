@@ -247,23 +247,56 @@ export const siteContent = {
     {
       time: "Now",
       label: "Current Direction",
-      title: "Software Engineer building backend-heavy product systems",
+      title: "Software Engineer focused on backend-heavy product systems",
       text:
-        "Focused on reliable application architecture, API design, workflow-driven systems, integrations, delivery quality, and full-stack implementation across product-facing and internal engineering work."
+        "Designing and building production-grade systems with a focus on API design, integrations, and workflow-driven architectures. Working across backend services, data flows, and full-stack features, while ensuring systems remain maintainable, observable, and reliable in real-world usage.",
+      focus: ["APIs", "Integrations", "Backend Architecture", "Data Flows"],
+      keyWork: [
+        "Designing integration-heavy systems across multiple providers",
+        "Building API-driven workflows",
+        "Handling data synchronization and consistency"
+      ],
+      impact: [
+        "Improved system reliability",
+        "Reduced integration failures",
+        "Delivered production-ready backend features"
+      ]
     },
     {
       time: "Recent Years",
       label: "Professional Growth",
-      title: "Expanded from implementation into end-to-end ownership",
+      title: "From implementation to full ownership of systems",
       text:
-        "Took on broader responsibility across planning, data design, integrations, debugging, architecture decisions, deployment flows, and production support."
+        "Moved beyond feature implementation into owning complete systems - from initial design and architecture to deployment, debugging, and long-term support in production environments.",
+      focus: ["System Design", "Debugging", "Production Support"],
+      keyWork: [
+        "Took ownership from design to deployment",
+        "Worked on workflow-heavy systems",
+        "Refactored legacy code"
+      ],
+      impact: [
+        "Improved maintainability",
+        "Faster feature delivery",
+        "Reduced bugs in production"
+      ]
     },
     {
       time: "Foundation",
       label: "Core Base",
-      title: "Built strong fundamentals in full-stack web development",
+      title: "Strong foundation in full-stack and backend development",
       text:
-        "Developed a practical engineering base around backend systems, APIs, databases, frontend implementation, maintainable code, and shipping real features."
+        "Built a solid engineering base across backend development, databases, APIs, and frontend integration, with a focus on writing clean, maintainable, and understandable code.",
+      focus: ["Backend Fundamentals", "Databases", "Frontend Integration"],
+      keyWork: [
+        "Built APIs and database logic",
+        "Implemented frontend integrations",
+        "Delivered real features"
+      ],
+      impact: [
+        "Strong engineering base",
+        "Ability to work across stack",
+        "Clean coding practices"
+      ]
     }
   ],
   contactCards: [

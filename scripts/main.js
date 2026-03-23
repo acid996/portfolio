@@ -162,7 +162,27 @@ function renderJourney() {
           <div class="timeline-card">
             <p class="card-label">${item.label}</p>
             <h3>${item.title}</h3>
-            <p>${item.text}</p>
+            <p class="timeline-copy">${item.text}</p>
+            <div class="timeline-detail-grid">
+              <section class="timeline-detail">
+                <p class="timeline-detail-label">Focus</p>
+                <ul class="timeline-list">
+                  ${item.focus.map((entry) => `<li>${entry}</li>`).join("")}
+                </ul>
+              </section>
+              <section class="timeline-detail">
+                <p class="timeline-detail-label">Key Work</p>
+                <ul class="timeline-list">
+                  ${item.keyWork.map((entry) => `<li>${entry}</li>`).join("")}
+                </ul>
+              </section>
+              <section class="timeline-detail">
+                <p class="timeline-detail-label">Impact</p>
+                <ul class="timeline-list">
+                  ${item.impact.map((entry) => `<li>${entry}</li>`).join("")}
+                </ul>
+              </section>
+            </div>
           </div>
         </article>
       `
