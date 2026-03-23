@@ -12,6 +12,61 @@ const formStatus = document.getElementById("form-status");
 const startedAt = document.getElementById("started-at");
 const cursorTooltip = document.getElementById("cursor-tooltip");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const supportsHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+const prominentTech = new Set(["C#", ".NET", "ASP.NET Core", "Angular", "Docker"]);
+const socialIcons = {
+  GitHub: `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 2.75a9.25 9.25 0 0 0-2.93 18.03c.46.08.63-.19.63-.44v-1.56c-2.57.56-3.11-1.09-3.11-1.09-.42-1.05-1.03-1.34-1.03-1.34-.84-.56.07-.55.07-.55.92.07 1.4.94 1.4.94.83 1.39 2.17.99 2.69.76.08-.59.33-.99.58-1.22-2.05-.23-4.21-1.01-4.21-4.53 0-1 .36-1.81.94-2.45-.09-.23-.4-1.16.09-2.41 0 0 .77-.24 2.53.94A8.8 8.8 0 0 1 12 7.35c.78 0 1.57.11 2.31.33 1.75-1.18 2.52-.94 2.52-.94.5 1.25.18 2.18.09 2.41.59.64.94 1.45.94 2.45 0 3.52-2.17 4.29-4.24 4.51.33.28.63.84.63 1.71v2.52c0 .25.17.52.64.43A9.25 9.25 0 0 0 12 2.75Z"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linejoin="round"
+      />
+    </svg>
+  `,
+  LinkedIn: `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M8.25 9.5v8.25M8.25 6.5h.01M12.75 17.75V13c0-1.4.85-2.5 2.25-2.5S17.25 11.6 17.25 13v4.75" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M5.25 3.75h13.5a1.5 1.5 0 0 1 1.5 1.5v13.5a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V5.25a1.5 1.5 0 0 1 1.5-1.5Z" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+  `,
+  YouTube: `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M20.25 8.63a2.6 2.6 0 0 0-1.84-1.84C16.82 6.38 12 6.38 12 6.38s-4.82 0-6.41.41A2.6 2.6 0 0 0 3.75 8.63c-.42 1.6-.42 3.37-.42 3.37s0 1.77.42 3.37a2.6 2.6 0 0 0 1.84 1.84c1.59.41 6.41.41 6.41.41s4.82 0 6.41-.41a2.6 2.6 0 0 0 1.84-1.84c.42-1.6.42-3.37.42-3.37s0-1.77-.42-3.37Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="m10.25 14.72 4.5-2.72-4.5-2.72v5.44Z" fill="currentColor"/>
+    </svg>
+  `,
+  Email: `
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4.5 6.75h15A1.75 1.75 0 0 1 21.25 8.5v7A1.75 1.75 0 0 1 19.5 17.25h-15A1.75 1.75 0 0 1 2.75 15.5v-7A1.75 1.75 0 0 1 4.5 6.75Z" stroke="currentColor" stroke-width="1.5"/>
+      <path d="m4 8 8 5 8-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `
+};
+
+function setRevealDelay(element, delay) {
+  element.style.setProperty("--reveal-delay", `${delay}ms`);
+}
+
+function withRevealStyle(delay) {
+  return `style="--reveal-delay: ${delay}ms"`;
+}
+
+function annotateRevealSequence(containerSelector, childSelector, startDelay = 0, step = 70) {
+  const container = document.querySelector(containerSelector);
+  if (!container) {
+    return;
+  }
+
+  const elements = container.querySelectorAll(childSelector);
+  elements.forEach((element, index) => {
+    element.setAttribute("data-reveal", "");
+    if (!element.style.getPropertyValue("--reveal-delay")) {
+      setRevealDelay(element, startDelay + index * step);
+    }
+  });
+}
 
 function renderLinkAttributes(url) {
   if (url.startsWith("http")) {
@@ -29,8 +84,15 @@ function renderHeroSocials() {
 
   container.innerHTML = siteContent.heroSocials
     .map(
-      (item) =>
-        `<a class="social-link" href="${item.href}"${renderLinkAttributes(item.href)}>${item.label}</a>`
+      (item, index) =>
+        `<a class="social-link interactive-icon" href="${item.href}"${renderLinkAttributes(item.href)} aria-label="${item.label}" data-reveal ${withRevealStyle(
+          360 + index * 60
+        )}>
+          <span class="social-link-icon" aria-hidden="true">
+            ${socialIcons[item.label] || socialIcons.Email}
+          </span>
+          <span class="social-link-label">${item.label}</span>
+        </a>`
     )
     .join("");
 }
@@ -56,7 +118,7 @@ function renderHeroSignalCards() {
   }
 
   container.innerHTML = siteContent.heroSignalCards
-    .map((card) => {
+    .map((card, index) => {
       const body = card.bullets
         ? `<ul>${card.bullets.map((item) => `<li>${item}</li>`).join("")}</ul>`
         : `<p>${card.text}</p>`;
@@ -64,7 +126,7 @@ function renderHeroSignalCards() {
       const title = card.title ? `<h3>${card.title}</h3>` : "";
 
       return `
-        <article class="signal-card" data-reveal>
+        <article class="signal-card interactive-card" data-reveal ${withRevealStyle(520 + index * 70)}>
           <p class="card-label">${card.label}</p>
           ${title}
           ${body}
@@ -82,8 +144,8 @@ function renderAboutCards() {
 
   container.innerHTML = siteContent.aboutCards
     .map(
-      (card) => `
-        <article class="about-card" data-reveal>
+      (card, index) => `
+        <article class="about-card interactive-card" data-reveal ${withRevealStyle(80 + index * 70)}>
           <p class="card-label">${card.label}</p>
           <h3>${card.title}</h3>
           <p>${card.text}</p>
@@ -101,12 +163,19 @@ function renderSkills() {
 
   container.innerHTML = siteContent.skills
     .map(
-      (group) => `
-        <article class="skill-card" data-reveal>
+      (group, groupIndex) => `
+        <article class="skill-card interactive-card" data-reveal ${withRevealStyle(groupIndex * 80)}>
           <p class="card-label">${group.label}</p>
           <h3>${group.title}</h3>
           <div class="chip-row">
-            ${group.items.map((item) => `<span class="chip">${item}</span>`).join("")}
+            ${group.items
+              .map((item, itemIndex) => {
+                const isKeyTech = prominentTech.has(item);
+                return `<span class="chip interactive-chip${isKeyTech ? " is-key-tech" : ""}" data-reveal ${withRevealStyle(
+                  110 + groupIndex * 60 + itemIndex * 38
+                )}>${item}</span>`;
+              })
+              .join("")}
           </div>
         </article>
       `
@@ -122,11 +191,13 @@ function renderWork() {
 
   container.innerHTML = siteContent.work
     .map(
-      (item) => `
-        <article class="work-card${item.featured ? " is-featured" : ""}" data-reveal>
+      (item, index) => `
+        <article class="work-card interactive-card${item.featured ? " is-featured" : ""}" data-reveal ${withRevealStyle(
+          index * 80
+        )}>
           <div class="work-card-header">
             <div class="work-meta">
-              ${item.tags.map((tag) => `<span class="meta-chip">${tag}</span>`).join("")}
+              ${item.tags.map((tag) => `<span class="meta-chip interactive-chip">${tag}</span>`).join("")}
             </div>
             <h3>${item.title}</h3>
           </div>
@@ -156,10 +227,10 @@ function renderJourney() {
 
   container.innerHTML = siteContent.journey
     .map(
-      (item) => `
-        <article class="timeline-item" data-reveal>
+      (item, index) => `
+        <article class="timeline-item" data-reveal ${withRevealStyle(index * 90)}>
           <span class="timeline-time">${item.time}</span>
-          <div class="timeline-card">
+          <div class="timeline-card interactive-card">
             <p class="card-label">${item.label}</p>
             <h3>${item.title}</h3>
             <p class="timeline-copy">${item.text}</p>
@@ -188,6 +259,8 @@ function renderJourney() {
       `
     )
     .join("");
+
+  container.setAttribute("data-line-reveal", "");
 }
 
 function renderContactCards() {
@@ -197,14 +270,15 @@ function renderContactCards() {
   }
 
   container.innerHTML = siteContent.contactCards
-    .map((card) => {
+    .map((card, index) => {
       if (card.mode === "email") {
         return `
           <button
-            class="contact-card primary is-email-card"
+            class="contact-card interactive-card primary is-email-card"
             type="button"
             data-copy-email="${card.value}"
             data-reveal
+            ${withRevealStyle(index * 70)}
             aria-label="Copy email address ${card.value}"
           >
             <span class="card-label">${card.title}</span>
@@ -217,10 +291,11 @@ function renderContactCards() {
 
       return `
         <a
-          class="contact-card${card.primary ? " primary" : ""}"
+          class="contact-card interactive-card${card.primary ? " primary" : ""}"
           href="${card.href}"
           ${card.href.startsWith("http") ? 'target="_blank" rel="noreferrer"' : ""}
           data-reveal
+          ${withRevealStyle(index * 70)}
         >
           <span class="card-label">${card.title}</span>
           <strong class="contact-card-value">${card.value}</strong>
@@ -454,11 +529,27 @@ function setupNavigation() {
   sections.forEach((section) => sectionObserver.observe(section));
 }
 
+function setupHeaderState() {
+  const header = document.querySelector(".site-header");
+  if (!header) {
+    return;
+  }
+
+  const syncHeader = () => {
+    header.classList.toggle("is-scrolled", window.scrollY > 12);
+  };
+
+  syncHeader();
+  window.addEventListener("scroll", syncHeader, { passive: true });
+}
+
 function setupRevealAnimations() {
   const revealElements = document.querySelectorAll("[data-reveal]");
+  const lineRevealElements = document.querySelectorAll("[data-line-reveal]");
 
   if (reducedMotion.matches) {
     revealElements.forEach((element) => element.classList.add("is-visible"));
+    lineRevealElements.forEach((element) => element.classList.add("is-visible"));
     return;
   }
 
@@ -472,11 +563,13 @@ function setupRevealAnimations() {
       });
     },
     {
-      threshold: 0.16
+      threshold: 0.14,
+      rootMargin: "0px 0px -8% 0px"
     }
   );
 
   revealElements.forEach((element) => revealObserver.observe(element));
+  lineRevealElements.forEach((element) => revealObserver.observe(element));
 }
 
 function setupSpotlight() {
@@ -487,6 +580,58 @@ function setupSpotlight() {
   window.addEventListener("pointermove", (event) => {
     root.style.setProperty("--spotlight-x", `${event.clientX}px`);
     root.style.setProperty("--spotlight-y", `${event.clientY}px`);
+  });
+}
+
+function setupInteractiveSurfaces() {
+  if (reducedMotion.matches || !supportsHover.matches) {
+    return;
+  }
+
+  const surfaces = document.querySelectorAll(
+    [
+      ".interactive-button",
+      ".interactive-icon",
+      ".interactive-card",
+      ".interactive-chip",
+      ".theme-toggle",
+      ".nav-toggle"
+    ].join(", ")
+  );
+
+  surfaces.forEach((surface) => {
+    surface.addEventListener("pointermove", (event) => {
+      const rect = surface.getBoundingClientRect();
+      surface.style.setProperty("--pointer-x", `${event.clientX - rect.left}px`);
+      surface.style.setProperty("--pointer-y", `${event.clientY - rect.top}px`);
+    });
+  });
+}
+
+function annotateStaticReveals() {
+  annotateRevealSequence(
+    ".hero-copy",
+    ".hero-pill, .hero-label, h1, .hero-intro, .hero-actions, .social-row",
+    0,
+    70
+  );
+  annotateRevealSequence(".hero-panel", ".terminal-card", 430, 60);
+  document.querySelectorAll(".section-heading").forEach((heading) => {
+    [...heading.children].forEach((element, index) => {
+      element.setAttribute("data-reveal", "");
+      if (!element.style.getPropertyValue("--reveal-delay")) {
+        setRevealDelay(element, index * 70);
+      }
+    });
+  });
+  document.querySelectorAll(".form-card").forEach((card) => {
+    const elements = card.querySelectorAll(".form-heading, .field, .form-actions, .form-status");
+    elements.forEach((element, index) => {
+      element.setAttribute("data-reveal", "");
+      if (!element.style.getPropertyValue("--reveal-delay")) {
+        setRevealDelay(element, 70 + index * 55);
+      }
+    });
   });
 }
 
@@ -682,10 +827,13 @@ function init() {
   renderWork();
   renderJourney();
   renderContactCards();
+  annotateStaticReveals();
   setupContactCardActions();
   setupThemeToggle();
+  setupHeaderState();
   setupNavigation();
   setupRevealAnimations();
+  setupInteractiveSurfaces();
   setupSpotlight();
   setupContactForm();
 }
