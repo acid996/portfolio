@@ -557,6 +557,40 @@ h4 {
   gap: 2rem;
 }
 
+@media (min-width: 1041px) {
+  .hero-grid {
+    align-items: stretch;
+  }
+
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    padding-top: 0.25rem;
+    padding-bottom: 0.2rem;
+  }
+
+  .hero-title {
+    max-width: 11.5ch;
+    font-size: clamp(4rem, 6.8vw, 4.7rem);
+    line-height: 0.94;
+    letter-spacing: -0.02em;
+    word-spacing: 0.02em;
+  }
+
+  .hero-intro {
+    max-width: 39rem;
+  }
+
+  .hero-actions {
+    margin-top: auto;
+  }
+
+  .social-row {
+    margin-top: 1rem;
+  }
+}
+
 .hero-grid {
   grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
   align-items: start;
@@ -564,6 +598,7 @@ h4 {
 
 .hero-copy,
 .hero-panel,
+.cv-card,
 .about-card,
 .skill-card,
 .work-card,
@@ -879,6 +914,7 @@ h4 {
 }
 
 .terminal-card,
+.cv-card,
 .about-card,
 .skill-card,
 .work-card,
@@ -901,6 +937,7 @@ h4 {
 }
 
 .terminal-card::before,
+.cv-card::before,
 .about-card::before,
 .skill-card::before,
 .work-card::before,
@@ -924,6 +961,7 @@ h4 {
 }
 
 .terminal-card,
+.cv-card,
 .about-card,
 .skill-card,
 .work-card,
@@ -967,6 +1005,67 @@ h4 {
   gap: 1rem;
   margin-top: 1rem;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.cv-section {
+  padding-top: 1.2rem;
+}
+
+.cv-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.8rem;
+  align-items: center;
+  padding: 1.55rem 1.65rem;
+}
+
+.cv-copy {
+  max-width: 40rem;
+}
+
+.cv-copy h2 {
+  margin: 0.24rem 0 0.72rem;
+  font-size: clamp(1.55rem, 2.2vw, 2rem);
+}
+
+.cv-copy p:not(.cv-format) {
+  margin: 0;
+  color: var(--muted);
+  max-width: 36rem;
+}
+
+.cv-format {
+  margin: 0.95rem 0 0;
+  font-size: 0.76rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.cv-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cv-button {
+  min-width: 12.2rem;
+  justify-content: center;
+  gap: 0.68rem;
+}
+
+.cv-button-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.12rem;
+  height: 1.12rem;
+}
+
+.cv-button-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .signal-card {
@@ -1017,6 +1116,8 @@ h4 {
 
 .signal-card:hover,
 .signal-card:focus-within,
+.cv-card:hover,
+.cv-card:focus-within,
 .skill-card:hover,
 .skill-card:focus-within,
 .about-card:hover,
@@ -1040,6 +1141,8 @@ h4 {
 
 .signal-card:hover::before,
 .signal-card:focus-within::before,
+.cv-card:hover::before,
+.cv-card:focus-within::before,
 .skill-card:hover::before,
 .skill-card:focus-within::before,
 .about-card:hover::before,
@@ -1308,31 +1411,81 @@ h4 {
 
 .contact-card {
   display: grid;
-  gap: 0.28rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  column-gap: 1rem;
   min-height: 7.3rem;
   min-width: 0;
   text-align: left;
-  padding: 1.05rem 1rem;
+  padding: 1.15rem 1.1rem;
 }
 
-.contact-card strong {
-  font-size: 0.98rem;
-  line-height: 1.35;
+.contact-card-content {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  min-width: 0;
+}
+
+.contact-card-label {
+  color: var(--soft);
+  font-size: 0.73rem;
+  font-family: "Sora", sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   transition:
     color var(--motion-fast) ease,
     transform var(--motion-fast) ease;
 }
 
 .contact-card-value {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--text);
+  margin-top: 0.34rem;
   max-width: 100%;
   overflow-wrap: anywhere;
   word-break: break-word;
-}
-
-.contact-card span {
   transition:
     color var(--motion-fast) ease,
     transform var(--motion-fast) ease;
+}
+
+.contact-card-description {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin-top: auto;
+  transition:
+    color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.contact-card-icon {
+  display: grid;
+  place-items: center;
+  width: 2.45rem;
+  height: 2.45rem;
+  min-width: 2.45rem;
+  border-radius: 999px;
+  align-self: end;
+  justify-self: end;
+  border: 1px solid color-mix(in srgb, var(--text) 8%, var(--border));
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  color: color-mix(in srgb, var(--accent) 68%, var(--text) 32%);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 4%, transparent);
+  transition:
+    transform var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.contact-card-icon svg {
+  width: 1.12rem;
+  height: 1.12rem;
 }
 
 .contact-card.primary {
@@ -1342,18 +1495,37 @@ h4 {
   border-color: var(--border-strong);
 }
 
-.contact-card:hover strong,
-.contact-card:focus-visible strong,
-.contact-card:focus-within strong {
+.contact-card:hover .contact-card-value,
+.contact-card:focus-visible .contact-card-value,
+.contact-card:focus-within .contact-card-value {
   color: var(--text);
   transform: translateY(-1px);
 }
 
-.contact-card:hover span,
-.contact-card:focus-visible span,
-.contact-card:focus-within span {
+.contact-card:hover .contact-card-label,
+.contact-card:focus-visible .contact-card-label,
+.contact-card:focus-within .contact-card-label {
+  color: color-mix(in srgb, var(--accent) 54%, var(--soft) 46%);
+  transform: translateY(-1px);
+}
+
+.contact-card:hover .contact-card-description,
+.contact-card:focus-visible .contact-card-description,
+.contact-card:focus-within .contact-card-description {
   color: color-mix(in srgb, var(--muted) 88%, var(--text) 12%);
   transform: translateY(-1px);
+}
+
+.contact-card:hover .contact-card-icon,
+.contact-card:focus-visible .contact-card-icon,
+.contact-card:focus-within .contact-card-icon {
+  transform: translateY(-2px) scale(1.08);
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  color: color-mix(in srgb, var(--accent) 84%, var(--text) 16%);
+  background: color-mix(in srgb, var(--surface-highlight) 72%, var(--surface));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent),
+    0 0 18px color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .is-email-card {
@@ -1618,6 +1790,15 @@ h4 {
     right: auto;
     top: 0.16rem;
   }
+
+  .cv-card {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .cv-actions {
+    justify-content: flex-start;
+  }
 }
 
 @media (max-width: 780px) {
@@ -1658,6 +1839,25 @@ h4 {
 
   .brand-copy span {
     font-size: 0.74rem;
+  }
+
+  .cv-section {
+    padding-top: 0.8rem;
+  }
+
+  .cv-card {
+    gap: 1.2rem;
+    padding: 1.3rem;
+  }
+
+  .cv-copy h2 {
+    margin-bottom: 0.62rem;
+    font-size: 1.42rem;
+  }
+
+  .cv-button {
+    width: 100%;
+    min-width: 0;
   }
 
   .nav-panel {
@@ -1728,6 +1928,32 @@ h4 {
 
   .hero {
     padding-top: 1.9rem;
+  }
+
+  .hero-grid {
+    gap: 1.7rem;
+  }
+
+  .hero-copy {
+    width: 100%;
+  }
+
+  .hero-title {
+    max-width: none;
+    width: 100%;
+  }
+
+  .hero-intro {
+    max-width: none;
+    margin-top: 1.25rem;
+  }
+
+  .hero-actions {
+    margin-top: 1.75rem;
+  }
+
+  .social-row {
+    margin-top: 1.2rem;
   }
 
   .social-link {
