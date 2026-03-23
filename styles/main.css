@@ -33,6 +33,11 @@
   --header-height: 88px;
   --spotlight-x: 50%;
   --spotlight-y: 18%;
+  --motion-fast: 220ms;
+  --motion-base: 300ms;
+  --motion-slow: 640ms;
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [data-theme="light"] {
@@ -165,6 +170,7 @@ main section[id] {
   border-radius: 999px;
   filter: blur(10px);
   z-index: 0;
+  will-change: transform;
 }
 
 .page-backdrop-a {
@@ -173,6 +179,7 @@ main section[id] {
   top: 5rem;
   right: -9rem;
   background: radial-gradient(circle, var(--hero-glow), transparent 72%);
+  animation: ambient-float-a 18s ease-in-out infinite alternate;
 }
 
 .page-backdrop-b {
@@ -181,6 +188,7 @@ main section[id] {
   left: -9rem;
   top: 36rem;
   background: radial-gradient(circle, color-mix(in srgb, var(--hero-glow) 80%, transparent), transparent 72%);
+  animation: ambient-float-b 22s ease-in-out infinite alternate;
 }
 
 .page-grid {
@@ -230,6 +238,18 @@ main section[id] {
   backdrop-filter: blur(18px);
   background: var(--header-bg);
   border-bottom: 1px solid var(--section-line);
+  transition:
+    background var(--motion-base) ease,
+    border-color var(--motion-base) ease,
+    box-shadow var(--motion-base) ease,
+    backdrop-filter var(--motion-base) ease;
+}
+
+.site-header.is-scrolled {
+  backdrop-filter: blur(22px);
+  background: color-mix(in srgb, var(--header-bg) 92%, var(--bg) 8%);
+  border-bottom-color: color-mix(in srgb, var(--section-line) 84%, var(--border) 16%);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
 .nav {
@@ -339,7 +359,10 @@ h4 {
   padding: 0.3rem 0;
   font-size: 0.93rem;
   color: var(--muted);
-  transition: color 180ms ease;
+  transition:
+    color var(--motion-fast) ease,
+    text-shadow var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
 }
 
 .nav-links a::after {
@@ -362,6 +385,7 @@ h4 {
 .nav-links a:focus-visible,
 .nav-links a.is-active {
   color: var(--text);
+  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 .nav-links a:hover::after,
@@ -384,17 +408,19 @@ h4 {
   background: color-mix(in srgb, var(--bg-elevated) 84%, transparent);
   color: var(--text);
   transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background 180ms ease;
+    transform var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
 }
 
 .theme-toggle:hover,
 .theme-toggle:focus-visible,
 .nav-toggle:hover,
 .nav-toggle:focus-visible {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
   border-color: var(--border-strong);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 .theme-toggle {
@@ -409,6 +435,9 @@ h4 {
   width: 1.35rem;
   height: 1.35rem;
   color: var(--accent);
+  transition:
+    transform var(--motion-base) var(--ease-standard),
+    color var(--motion-fast) ease;
 }
 
 .theme-toggle::before {
@@ -419,6 +448,20 @@ h4 {
   background:
     linear-gradient(145deg, color-mix(in srgb, var(--surface-highlight) 100%, transparent), transparent 70%);
   opacity: 0.9;
+  transition:
+    opacity var(--motion-fast) ease,
+    transform var(--motion-base) var(--ease-standard);
+}
+
+.theme-toggle:hover::before,
+.theme-toggle:focus-visible::before {
+  opacity: 1;
+  transform: scale(1.06);
+}
+
+.theme-toggle:hover .theme-toggle-icon-stack,
+.theme-toggle:focus-visible .theme-toggle-icon-stack {
+  transform: rotate(-10deg) scale(1.04);
 }
 
 .theme-toggle-icon {
@@ -628,19 +671,41 @@ h4 {
   justify-content: center;
   min-height: 3.4rem;
   padding: 0.92rem 1.25rem;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
   border-radius: 999px;
   border: 1px solid transparent;
   font-weight: 700;
   transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background 180ms ease,
-    box-shadow 180ms ease;
+    transform var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
 }
 
 .button:hover,
 .button:focus-visible {
-  transform: translateY(-1px);
+  transform: translateY(-4px) scale(1.016);
+}
+
+.button::before {
+  content: "";
+  position: absolute;
+  inset: -22%;
+  background: radial-gradient(
+    220px circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    color-mix(in srgb, var(--accent) 18%, transparent),
+    transparent 62%
+  );
+  opacity: 0;
+  transition: opacity var(--motion-base) ease;
+  pointer-events: none;
+}
+
+.button:hover::before,
+.button:focus-visible::before {
+  opacity: 1;
 }
 
 .button-primary {
@@ -649,47 +714,145 @@ h4 {
   box-shadow: 0 18px 36px color-mix(in srgb, var(--accent-strong) 24%, transparent);
 }
 
+.button-primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 18%,
+    rgba(255, 255, 255, 0.26) 38%,
+    transparent 56%
+  );
+  transform: translateX(-130%);
+  opacity: 0;
+  transition:
+    transform 420ms var(--ease-standard),
+    opacity var(--motion-fast) ease;
+}
+
+.button-primary:hover::after,
+.button-primary:focus-visible::after {
+  transform: translateX(130%);
+  opacity: 1;
+}
+
 .button-secondary {
   border-color: var(--border);
   background: color-mix(in srgb, var(--surface) 86%, transparent);
   color: var(--text);
 }
 
+.button-primary:hover,
+.button-primary:focus-visible {
+  box-shadow: 0 24px 44px color-mix(in srgb, var(--accent-strong) 30%, transparent);
+}
+
+.button-secondary:hover,
+.button-secondary:focus-visible {
+  border-color: color-mix(in srgb, var(--accent) 36%, var(--border));
+  background: color-mix(in srgb, var(--surface-highlight) 48%, var(--surface));
+  box-shadow: 0 18px 34px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.interactive-button,
+.interactive-icon,
+.interactive-card,
+.interactive-chip {
+  will-change: transform, box-shadow, border-color, background;
+}
+
 .social-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.9rem;
+  gap: 0.75rem;
   margin-top: 1.55rem;
 }
 
-.social-link,
-.work-link {
+.social-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.8rem;
+  min-height: 3.85rem;
+  max-width: 3.85rem;
+  padding: 0.56rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
   color: var(--muted);
-  transition: color 180ms ease;
-}
-
-.social-link::after,
-.work-link::after {
-  content: "";
-  width: 0.32rem;
-  height: 0.32rem;
-  border-radius: 50%;
-  background: color-mix(in srgb, var(--accent) 44%, transparent);
-}
-
-.social-link:last-child::after,
-.work-link:last-child::after {
-  display: none;
+  overflow: hidden;
+  white-space: nowrap;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+  transition:
+    max-width var(--motion-base) var(--ease-standard),
+    transform var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
 }
 
 .social-link:hover,
-.social-link:focus-visible,
-.work-link:hover,
-.work-link:focus-visible {
+.social-link:focus-visible {
+  max-width: 10.8rem;
+  transform: translateY(-4px) scale(1.05);
+  border-color: color-mix(in srgb, var(--accent) 42%, var(--border));
   color: var(--text);
+  background: color-mix(in srgb, var(--surface-highlight) 68%, var(--surface));
+  box-shadow:
+    0 14px 34px color-mix(in srgb, var(--accent) 26%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--accent) 12%, transparent) inset;
+}
+
+.social-link-icon {
+  display: grid;
+  place-items: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  min-width: 2.7rem;
+  border-radius: 999px;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--surface-highlight) 74%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 10%, transparent);
+  transform: translateX(-3px);
+  transition:
+    transform var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+.social-link-icon svg {
+  width: 1.55rem;
+  height: 1.55rem;
+}
+
+.social-link-label {
+  display: inline-block;
+  max-width: 0;
+  opacity: 0;
+  transform: translateX(6px);
+  transition:
+    max-width var(--motion-base) var(--ease-standard),
+    opacity var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.social-link:hover .social-link-label,
+.social-link:focus-visible .social-link-label {
+  max-width: 5rem;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.social-link:hover .social-link-icon,
+.social-link:focus-visible .social-link-icon {
+  transform: translateX(-2px) scale(1.06);
+  color: color-mix(in srgb, var(--accent) 90%, #ffffff 10%);
+  background: color-mix(in srgb, var(--surface-highlight) 100%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent),
+    0 0 22px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 .hero-panel {
@@ -712,6 +875,7 @@ h4 {
   background: radial-gradient(circle, var(--hero-glow), transparent 72%);
   pointer-events: none;
   filter: blur(16px);
+  animation: ambient-shine 14s ease-in-out infinite alternate;
 }
 
 .terminal-card,
@@ -722,11 +886,41 @@ h4 {
 .contact-card,
 .form-card,
 .signal-card {
+  overflow: hidden;
+  isolation: isolate;
   background: color-mix(in srgb, var(--bg-elevated) 92%, transparent);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   backdrop-filter: blur(18px);
   box-shadow: var(--shadow-soft);
+  transition:
+    transform var(--motion-base) var(--ease-soft),
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-base) ease,
+    background var(--motion-fast) ease;
+}
+
+.terminal-card::before,
+.about-card::before,
+.skill-card::before,
+.work-card::before,
+.timeline-card::before,
+.contact-card::before,
+.form-card::before,
+.signal-card::before,
+.chip::before,
+.meta-chip::before {
+  content: "";
+  position: absolute;
+  inset: -16%;
+  pointer-events: none;
+  background: radial-gradient(
+    220px circle at var(--pointer-x, 50%) var(--pointer-y, 50%),
+    color-mix(in srgb, var(--accent) 13%, transparent),
+    transparent 64%
+  );
+  opacity: 0;
+  transition: opacity var(--motion-base) ease;
 }
 
 .terminal-card,
@@ -821,24 +1015,50 @@ h4 {
   color: var(--accent);
 }
 
-.skill-card,
-.about-card,
-.contact-card,
-.timeline-card,
-.work-card {
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background 180ms ease;
+.signal-card:hover,
+.signal-card:focus-within,
+.skill-card:hover,
+.skill-card:focus-within,
+.about-card:hover,
+.about-card:focus-within,
+.contact-card:hover,
+.contact-card:focus-within,
+.timeline-card:hover,
+.timeline-card:focus-within,
+.work-card:hover,
+.work-card:focus-within,
+.terminal-card:hover,
+.terminal-card:focus-within,
+.form-card:hover,
+.form-card:focus-within {
+  transform: translateY(-5px) scale(1.012);
+  border-color: color-mix(in srgb, var(--accent) 34%, var(--border));
+  box-shadow:
+    0 24px 52px rgba(0, 0, 0, 0.22),
+    0 0 0 1px color-mix(in srgb, var(--accent) 8%, transparent) inset;
 }
 
-.skill-card:hover,
-.about-card:hover,
-.contact-card:hover,
-.timeline-card:hover,
-.work-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--border-strong);
+.signal-card:hover::before,
+.signal-card:focus-within::before,
+.skill-card:hover::before,
+.skill-card:focus-within::before,
+.about-card:hover::before,
+.about-card:focus-within::before,
+.contact-card:hover::before,
+.contact-card:focus-within::before,
+.timeline-card:hover::before,
+.timeline-card:focus-within::before,
+.work-card:hover::before,
+.work-card:focus-within::before,
+.terminal-card:hover::before,
+.terminal-card:focus-within::before,
+.form-card:hover::before,
+.form-card:focus-within::before,
+.chip:hover::before,
+.chip:focus-visible::before,
+.meta-chip:hover::before,
+.meta-chip:focus-visible::before {
+  opacity: 1;
 }
 
 .skills-grid {
@@ -854,17 +1074,40 @@ h4 {
 
 .chip,
 .meta-chip {
+  position: relative;
   padding: 0.46rem 0.8rem;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface) 86%, transparent);
   color: color-mix(in srgb, var(--accent) 82%, var(--text) 18%);
   font-size: 0.85rem;
+  overflow: hidden;
+  transition:
+    transform var(--motion-fast) ease,
+    border-color var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    color var(--motion-fast) ease;
 }
 
 .meta-chip {
   padding: 0.38rem 0.7rem;
   font-size: 0.75rem;
+}
+
+.chip:hover,
+.chip:focus-visible,
+.meta-chip:hover,
+.meta-chip:focus-visible {
+  transform: translateY(-3px) scale(1.028);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+  background: color-mix(in srgb, var(--surface-highlight) 74%, var(--surface));
+  box-shadow: 0 14px 28px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+.chip.is-key-tech {
+  border-color: color-mix(in srgb, var(--accent) 24%, var(--border));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 .work-grid {
@@ -891,6 +1134,15 @@ h4 {
 
 .work-card h3 {
   font-size: 1.36rem;
+  transition:
+    color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.work-card:hover h3,
+.work-card:focus-within h3 {
+  color: color-mix(in srgb, var(--text) 96%, var(--accent) 4%);
+  transform: translateX(2px);
 }
 
 .work-highlights {
@@ -908,6 +1160,37 @@ h4 {
   padding-top: 0.4rem;
 }
 
+.work-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+  transition:
+    color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
+.work-link::after {
+  content: "\2192";
+  font-size: 0.92rem;
+  color: color-mix(in srgb, var(--accent) 62%, transparent);
+  transition:
+    transform var(--motion-fast) ease,
+    color var(--motion-fast) ease;
+}
+
+.work-link:hover,
+.work-link:focus-visible {
+  color: var(--text);
+  transform: translateX(3px);
+}
+
+.work-link:hover::after,
+.work-link:focus-visible::after {
+  transform: translateX(3px);
+  color: var(--accent);
+}
+
 .timeline {
   position: relative;
   display: grid;
@@ -922,6 +1205,15 @@ h4 {
   left: 8rem;
   width: 1px;
   background: linear-gradient(180deg, var(--border-strong), transparent);
+  opacity: 0.48;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 900ms var(--ease-standard), opacity 500ms ease;
+}
+
+.timeline.is-visible::before {
+  opacity: 1;
+  transform: scaleY(1);
 }
 
 .timeline-item {
@@ -949,6 +1241,15 @@ h4 {
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 14px color-mix(in srgb, var(--accent) 62%, transparent);
+  transition:
+    transform var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease;
+}
+
+.timeline-item:hover .timeline-time::after,
+.timeline-item:focus-within .timeline-time::after {
+  transform: scale(1.08);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 72%, transparent);
 }
 
 .timeline-copy {
@@ -1017,6 +1318,9 @@ h4 {
 .contact-card strong {
   font-size: 0.98rem;
   line-height: 1.35;
+  transition:
+    color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
 }
 
 .contact-card-value {
@@ -1025,11 +1329,31 @@ h4 {
   word-break: break-word;
 }
 
+.contact-card span {
+  transition:
+    color var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
+}
+
 .contact-card.primary {
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--surface-highlight) 100%, transparent), transparent 52%),
     color-mix(in srgb, var(--bg-elevated) 94%, transparent);
   border-color: var(--border-strong);
+}
+
+.contact-card:hover strong,
+.contact-card:focus-visible strong,
+.contact-card:focus-within strong {
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.contact-card:hover span,
+.contact-card:focus-visible span,
+.contact-card:focus-within span {
+  color: color-mix(in srgb, var(--muted) 88%, var(--text) 12%);
+  transform: translateY(-1px);
 }
 
 .is-email-card {
@@ -1124,6 +1448,7 @@ h4 {
 .field {
   display: grid;
   gap: 0.55rem;
+  transition: transform var(--motion-fast) ease;
 }
 
 .field-full {
@@ -1133,6 +1458,7 @@ h4 {
 .field span {
   color: var(--text);
   font-size: 0.92rem;
+  transition: color var(--motion-fast) ease;
 }
 
 .field input,
@@ -1144,9 +1470,10 @@ h4 {
   color: var(--text);
   padding: 0.95rem 1rem;
   transition:
-    border-color 180ms ease,
-    box-shadow 180ms ease,
-    background 180ms ease;
+    border-color var(--motion-fast) ease,
+    box-shadow var(--motion-fast) ease,
+    background var(--motion-fast) ease,
+    transform var(--motion-fast) ease;
 }
 
 .field textarea {
@@ -1164,6 +1491,16 @@ h4 {
   outline: none;
   border-color: var(--border-strong);
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 12%, transparent);
+  background: color-mix(in srgb, var(--bg-input) 84%, var(--surface-highlight) 16%);
+  transform: translateY(-1px);
+}
+
+.field:focus-within {
+  transform: translateY(-1px);
+}
+
+.field:focus-within span {
+  color: color-mix(in srgb, var(--text) 82%, var(--accent) 18%);
 }
 
 .field.is-invalid input,
@@ -1229,15 +1566,20 @@ h4 {
 
 [data-reveal] {
   opacity: 0;
-  transform: translateY(26px);
+  filter: blur(7px);
+  transform: translateY(24px) scale(0.992);
   transition:
-    opacity 700ms ease,
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity var(--motion-slow) ease,
+    transform var(--motion-slow) var(--ease-standard),
+    filter var(--motion-slow) ease;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
 }
 
 [data-reveal].is-visible {
   opacity: 1;
-  transform: translateY(0);
+  filter: blur(0);
+  transform: translateY(0) scale(1);
 }
 
 @media (max-width: 1040px) {
@@ -1388,6 +1730,17 @@ h4 {
     padding-top: 1.9rem;
   }
 
+  .social-link {
+    max-width: none;
+    padding-right: 1rem;
+  }
+
+  .social-link-label {
+    max-width: 5rem;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
   .signal-grid,
   .contact-cards,
   .form-grid,
@@ -1433,6 +1786,37 @@ h4 {
 
   [data-reveal] {
     opacity: 1;
+    filter: none;
     transform: none;
+  }
+}
+
+@keyframes ambient-float-a {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(18px, -14px, 0);
+  }
+}
+
+@keyframes ambient-float-b {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-16px, 18px, 0);
+  }
+}
+
+@keyframes ambient-shine {
+  0% {
+    transform: translateX(-52%) translateY(4px) scale(0.94);
+  }
+
+  100% {
+    transform: translateX(-46%) translateY(-8px) scale(1.04);
   }
 }
