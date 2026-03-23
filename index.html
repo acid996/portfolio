@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stefan Shterjoski — Software Engineer</title>
+    <meta
+      name="description"
+      content="Software Engineer focused on backend-heavy product systems, scalable APIs, integrations, full-stack delivery, and maintainable software architecture."
+    />
+    <meta name="theme-color" content="#0b1016" />
+    <meta property="og:title" content="Stefan Shterjoski — Software Engineer" />
+    <meta
+      property="og:description"
+      content="Software Engineer focused on backend-heavy product systems, scalable APIs, integrations, full-stack delivery, and maintainable software architecture."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/og-card.svg" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Stefan Shterjoski — Software Engineer" />
+    <meta
+      property="twitter:description"
+      content="Backend-heavy product systems, clean architecture, integrations, and dependable full-stack delivery."
+    />
+    <meta property="twitter:image" content="assets/og-card.svg" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        try {
+          var storedTheme = localStorage.getItem("theme");
+          var theme = storedTheme === "light" || storedTheme === "dark" ? storedTheme : "dark";
+          document.documentElement.setAttribute("data-theme", theme);
+        } catch (error) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="styles/main.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Stefan Shterjoski",
+        "jobTitle": "Software Engineer",
+        "email": "mailto:shterjoski.stefan@gmail.com",
+        "sameAs": [
+          "https://github.com/acid996",
+          "https://www.linkedin.com/in/stefan-shterjoski/",
+          "https://www.youtube.com/@AcID99Six"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <div class="page-shell">
+      <div class="page-backdrop page-backdrop-a" aria-hidden="true"></div>
+      <div class="page-backdrop page-backdrop-b" aria-hidden="true"></div>
+      <div class="page-grid" aria-hidden="true"></div>
+
+      <header class="site-header" id="top">
+        <nav class="nav container" aria-label="Primary">
+          <a class="brand" href="#top" aria-label="Stefan Shterjoski home">
+            <span class="brand-mark">SS</span>
+            <span class="brand-copy">
+              <strong>Stefan Shterjoski</strong>
+              <span>Software Engineer</span>
+            </span>
+          </a>
+
+          <div class="nav-panel">
+            <div class="nav-links" id="nav-links">
+              <a href="#about">About</a>
+              <a href="#skills">Skills</a>
+              <a href="#work">Work</a>
+              <a href="#journey">Journey</a>
+              <a href="#contact">Contact</a>
+            </div>
+
+            <div class="nav-actions">
+              <button
+                class="theme-toggle"
+                id="theme-toggle"
+                type="button"
+                aria-label="Switch theme"
+                aria-pressed="false"
+              >
+                <span class="theme-toggle-track" aria-hidden="true">
+                  <span class="theme-toggle-thumb"></span>
+                </span>
+                <span class="theme-toggle-text">Dark</span>
+              </button>
+
+              <button
+                class="nav-toggle"
+                type="button"
+                aria-label="Toggle navigation"
+                aria-expanded="false"
+                aria-controls="nav-links"
+              >
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+          </div>
+        </nav>
+      </header>
+
+      <main id="main-content">
+        <section class="section hero" id="hero">
+          <div class="container hero-grid">
+            <div class="hero-copy" data-reveal>
+              <p class="hero-pill">
+                Available for select software roles, freelance collaborations,
+                and product engineering work
+              </p>
+              <p class="section-label hero-label">STEFAN SHTERJOSKI / ACID</p>
+              <h1>
+                Software Engineer building reliable, scalable, and modern
+                software systems.
+              </h1>
+              <p class="hero-intro">
+                I design and ship backend-heavy products with clean
+                architecture, resilient APIs, strong data foundations, and
+                thoughtful user-facing experiences. My focus is building systems
+                that stay maintainable as products and teams grow.
+              </p>
+
+              <div class="hero-actions">
+                <a class="button button-primary" href="#work">View Work</a>
+                <a class="button button-secondary" href="#contact">Contact Me</a>
+              </div>
+
+              <div class="social-row" id="hero-socials" aria-label="Social links"></div>
+            </div>
+
+            <div class="hero-panel" data-reveal>
+              <div class="hero-panel-shine" aria-hidden="true"></div>
+
+              <article class="terminal-card">
+                <div class="terminal-top" aria-hidden="true">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="terminal-lines" id="terminal-lines"></div>
+              </article>
+
+              <div class="signal-grid" id="hero-signal-cards"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="about">
+          <div class="container">
+            <div class="section-heading" data-reveal>
+              <p class="section-label">About</p>
+              <h2>Engineering with calm systems thinking and strong execution.</h2>
+              <p>
+                I’m a software engineer focused on building dependable products
+                with a backend-first mindset. I care about architecture that
+                stays understandable, APIs that remain pleasant to extend, and
+                delivery that balances speed with long-term maintainability. I
+                enjoy solving implementation problems across services, data,
+                integrations, and product-facing features.
+              </p>
+            </div>
+
+            <div class="about-grid" id="about-cards"></div>
+          </div>
+        </section>
+
+        <section class="section" id="skills">
+          <div class="container">
+            <div class="section-heading" data-reveal>
+              <p class="section-label">Tech Stack</p>
+              <h2>Tools I trust to deliver maintainable software.</h2>
+              <p>
+                Built around backend-heavy engineering, full-stack product
+                delivery, clean architecture, and practical operations.
+              </p>
+            </div>
+
+            <div class="skills-grid" id="skills-grid"></div>
+          </div>
+        </section>
+
+        <section class="section" id="work">
+          <div class="container">
+            <div class="section-heading" data-reveal>
+              <p class="section-label">Selected Work</p>
+              <h2>
+                Representative systems and engineering work across backend-heavy
+                platforms, integrations, analytics, and business workflows.
+              </h2>
+              <p>
+                Work spanning healthcare systems, workflow platforms, analytics
+                dashboards, payroll-related business software, SaaS backend
+                engineering, and full-stack business applications.
+              </p>
+            </div>
+
+            <div class="work-grid" id="work-grid"></div>
+          </div>
+        </section>
+
+        <section class="section" id="journey">
+          <div class="container">
+            <div class="section-heading" data-reveal>
+              <p class="section-label">Journey</p>
+              <h2>A concise view of growth, ownership, and technical depth.</h2>
+              <p>
+                This portfolio focuses on the engineering work I do best:
+                reliable systems, clean backend architecture, integrations,
+                full-stack product delivery, and end-to-end ownership.
+              </p>
+            </div>
+
+            <div class="timeline" id="journey-timeline"></div>
+          </div>
+        </section>
+
+        <section class="section" id="contact">
+          <div class="container contact-grid">
+            <div class="contact-copy" data-reveal>
+              <div class="section-heading left">
+                <p class="section-label">Contact</p>
+                <h2>Let’s build something thoughtful, reliable, and well executed.</h2>
+                <p>
+                  For software roles, freelance opportunities, backend-focused
+                  projects, and technical conversations, reach out directly.
+                  Email is the fastest path.
+                </p>
+              </div>
+
+              <div class="contact-cards" id="contact-cards"></div>
+            </div>
+
+            <div class="form-card" data-reveal>
+              <div class="form-heading">
+                <p class="section-label">Direct Message</p>
+                <h3>Send a message directly from the site</h3>
+                <p>
+                  This form uses a lightweight email delivery service for direct
+                  contact without a custom backend.
+                </p>
+              </div>
+
+              <form
+                id="contact-form"
+                action="https://formsubmit.co/shterjoski.stefan@gmail.com"
+                method="POST"
+                novalidate
+              >
+                <input
+                  type="hidden"
+                  name="_subject"
+                  value="Portfolio inquiry for Stefan Shterjoski"
+                />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_template" value="table" />
+                <input
+                  class="honeypot"
+                  type="text"
+                  name="_honey"
+                  tabindex="-1"
+                  autocomplete="off"
+                  aria-hidden="true"
+                />
+                <input type="hidden" id="started-at" value="" />
+
+                <div class="form-grid">
+                  <label class="field">
+                    <span>Name</span>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      autocomplete="name"
+                      placeholder="Your name"
+                      aria-describedby="name-error"
+                      required
+                    />
+                    <small class="error-text" id="name-error" data-error-for="name"></small>
+                  </label>
+
+                  <label class="field">
+                    <span>Email</span>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autocomplete="email"
+                      placeholder="you@company.com"
+                      aria-describedby="email-error"
+                      required
+                    />
+                    <small class="error-text" id="email-error" data-error-for="email"></small>
+                  </label>
+
+                  <label class="field field-full">
+                    <span>Company or role</span>
+                    <input
+                      id="context"
+                      name="context"
+                      type="text"
+                      autocomplete="organization"
+                      placeholder="Hiring team, client project, or role"
+                      aria-describedby="context-error"
+                    />
+                    <small class="error-text" id="context-error" data-error-for="context"></small>
+                  </label>
+
+                  <label class="field field-full">
+                    <span>Message</span>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows="6"
+                      placeholder="Tell me a little about the role, project, or conversation you’d like to have."
+                      aria-describedby="message-error"
+                      required
+                    ></textarea>
+                    <small class="error-text" id="message-error" data-error-for="message"></small>
+                  </label>
+                </div>
+
+                <div class="form-actions">
+                  <button class="button button-primary" type="submit">
+                    <span class="button-label">Send Message</span>
+                    <span class="button-loading" aria-hidden="true">Sending...</span>
+                  </button>
+                  <a
+                    class="button button-secondary"
+                    href="mailto:shterjoski.stefan@gmail.com"
+                  >
+                    Email Me
+                  </a>
+                </div>
+
+                <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+              </form>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="container footer-grid">
+          <p>Stefan Shterjoski</p>
+          <p>Software Engineer focused on dependable product systems.</p>
+          <p>&copy; 2026 All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="scripts/main.js"></script>
+  </body>
+</html>
