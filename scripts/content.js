@@ -133,10 +133,12 @@ export const siteContent = {
         "GitHub Actions",
         "Azure DevOps",
         "CI/CD",
-        "Linux",
         "IIS",
         "NGINX",
-        "Git"
+        "Git",
+        "Linux",
+        "Windows",
+        "MacOs"
       ]
     }
   ],
