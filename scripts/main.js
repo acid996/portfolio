@@ -205,14 +205,14 @@ function renderWork() {
           <ul class="work-highlights">
             ${item.highlights.map((highlight) => `<li>${highlight}</li>`).join("")}
           </ul>
-          <div class="work-links">
+         <!-- <div class="work-links">
             ${item.actions
               .map(
                 (action) =>
                   `<a class="work-link" href="${action.href}"${renderLinkAttributes(action.href)}>${action.label}</a>`
               )
               .join("")}
-          </div>
+          </div> -->
         </article>
       `
     )
