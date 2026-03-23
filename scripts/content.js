@@ -145,10 +145,10 @@ export const siteContent = {
   work: [
     {
       featured: true,
-      title: "Healthcare Middleware & Integration Platform",
+      title: "Regulated Operations Platform",
       description:
-        "Designed and developed a middleware system integrating CRM, booking systems, invoicing platforms, SMS services, and patient-related data flows. The platform handled synchronization, workflow orchestration, and interoperability challenges across multiple external providers.",
-      tags: ["Healthcare", "Integrations", "Middleware", "Data Flows"],
+        "Backend-heavy product work in a regulated environment, focused on maintainable architecture, integrations, workflow reliability, and long-term system stability.",
+      tags: ["Integrations", "Middleware", "Data Flows"],
       highlights: [
         "Built integration flows across multiple third-party systems",
         "Designed data synchronization and consistency strategies",
@@ -156,20 +156,16 @@ export const siteContent = {
         "Solved real-world interoperability and data-conflict issues"
       ],
       actions: [
-        {
-          label: "Contact for details",
-          href: "mailto:shterjoski.stefan@gmail.com?subject=Healthcare%20Middleware%20Work"
-        },
-        {
-          label: "Connect on LinkedIn",
-          href: "https://www.linkedin.com/in/stefan-shterjoski/"
-        }
+        // {
+        //   label: "Connect on LinkedIn",
+        //   href: "https://www.linkedin.com/in/stefan-shterjoski/"
+        // }
       ]
     },
     {
-      title: "Workflow-Driven Matching & Case Management System",
+      title: "Business Operations Workflow Platform",
       description:
-        "Engineered a role-based platform with workflow states, permissions, lifecycle management, matching logic, and reporting. The system supported structured processes across multiple user roles and emphasized usability, responsiveness, and operational clarity.",
+        "Operational software supporting structured business processes, data consistency, internal workflows, and backend services that scale with product complexity.",
       tags: ["Workflow", "Permissions", "Matching", "Reporting"],
       highlights: [
         "Designed role-based access and permission models",
@@ -178,16 +174,16 @@ export const siteContent = {
         "Structured end-to-end lifecycle behavior across multiple actors"
       ],
       actions: [
-        {
-          label: "Contact for details",
-          href: "mailto:shterjoski.stefan@gmail.com?subject=Workflow%20Platform%20Inquiry"
-        }
+        // {
+        //   label: "Contact for details",
+        //   href: "mailto:shterjoski.stefan@gmail.com?subject=Workflow%20Platform%20Inquiry"
+        // }
       ]
     },
     {
-      title: "Healthcare Analytics & Executive Dashboard",
+      title: "Analytics & Executive Reporting Dashboard",
       description:
-        "Built an analytics dashboard designed to give leadership real-time visibility into operational, financial, and patient-related metrics. The system emphasized trend analysis, alerts, summaries, time-based comparisons, and data-driven decision support.",
+        "Dashboard-focused engineering work centered on reporting, data visibility, decision support, and product-facing analytics for operational insight.",
       tags: ["Analytics", "Dashboards", "Healthcare", "Decision Support"],
       highlights: [
         "Designed KPI structures for patients, bookings, appointments, operations, and finance",
@@ -196,10 +192,10 @@ export const siteContent = {
         "Focused on decision-support and proactive alerting for management"
       ],
       actions: [
-        {
-          label: "Contact for details",
-          href: "mailto:shterjoski.stefan@gmail.com?subject=Healthcare%20Analytics%20Inquiry"
-        }
+        // {
+        //   label: "Contact for details",
+        //   href: "mailto:shterjoski.stefan@gmail.com?subject=Healthcare%20Analytics%20Inquiry"
+        // }
       ]
     },
     {
@@ -214,10 +210,10 @@ export const siteContent = {
         "Worked in software contexts where reliability and business accuracy mattered"
       ],
       actions: [
-        {
-          label: "Contact for details",
-          href: "mailto:shterjoski.stefan@gmail.com?subject=Payroll%20Software%20Inquiry"
-        }
+        // {
+        //   label: "Contact for details",
+        //   href: "mailto:shterjoski.stefan@gmail.com?subject=Payroll%20Software%20Inquiry"
+        // }
       ]
     },
     {
@@ -232,14 +228,14 @@ export const siteContent = {
         "Full-stack Angular + .NET implementation"
       ],
       actions: [
-        {
-          label: "View GitHub Profile",
-          href: "https://github.com/acid996"
-        },
-        {
-          label: "Contact for details",
-          href: "mailto:shterjoski.stefan@gmail.com?subject=Travel%20Agency%20Management%20System"
-        }
+        // {
+        //   label: "View GitHub Profile",
+        //   href: "https://github.com/acid996"
+        // },
+        // {
+        //   label: "Contact for details",
+        //   href: "mailto:shterjoski.stefan@gmail.com?subject=Travel%20Agency%20Management%20System"
+        // }
       ]
     }
   ],
