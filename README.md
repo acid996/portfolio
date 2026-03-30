@@ -34,9 +34,9 @@ Then open `http://localhost:4321`.
 
 ## Edit content
 
-Main page structure and section copy are in [`/Users/AcID/Repos/Private/Portfolio/index.html`](/Users/AcID/Repos/Private/Portfolio/index.html).
+Main page structure and section copy are in [`/Portfolio/index.html`](/Portfolio/index.html).
 
-Centralized repeatable content lives in [`/Users/AcID/Repos/Private/Portfolio/scripts/content.js`](/Users/AcID/Repos/Private/Portfolio/scripts/content.js):
+Centralized repeatable content lives in [`/Portfolio/scripts/content.js`](/Portfolio/scripts/content.js):
 
 - social links
 - hero terminal lines
@@ -47,13 +47,13 @@ Centralized repeatable content lives in [`/Users/AcID/Repos/Private/Portfolio/sc
 - journey timeline items
 - contact cards
 
-Theme tokens, card styling, responsive layout, and dark/light mode styling live in [`/Users/AcID/Repos/Private/Portfolio/styles/main.css`](/Users/AcID/Repos/Private/Portfolio/styles/main.css).
+Theme tokens, card styling, responsive layout, and dark/light mode styling live in [`/Portfolio/styles/main.css`](/Portfolio/styles/main.css).
 
-Client-side behavior lives in [`/Users/AcID/Repos/Private/Portfolio/scripts/main.js`](/Users/AcID/Repos/Private/Portfolio/scripts/main.js).
+Client-side behavior lives in [`/Portfolio/scripts/main.js`](/Portfolio/scripts/main.js).
 
 ## Contact form
 
-The site uses [FormSubmit](https://formsubmit.co/) for low-maintenance message delivery to `shterjoski.stefan@gmail.com`.
+The site uses [FormSubmit](https://formsubmit.co/) for low-maintenance message delivery to `my email`.
 
 Included features:
 
